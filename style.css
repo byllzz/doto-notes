@@ -28,7 +28,7 @@
   --multi-yellow: #ffff00;
   --multi-bisque: #ffe4c4;
   --multi-blue: #0000ff;
-  --multi-black: #000000;
+  --multi-red: #ff0000;
   --multi-orange: #ff8000;
   --color-orange: #ffab91;
   --color-yellow: #ffe082;
@@ -123,14 +123,25 @@ button {
   margin-bottom: 50px;
   font-size: 25px;
   font-family: var(--font-family);
-  line-height: .95;
+  line-height: .25;
+  position: relative;
+  left: 8px;
 }
 
 .logo span {
   position: relative;
-  left: 18px;
-  color: #00ff00;
+  display: flex;
+  align-items: center;
+  right: 10px;
+  color: var(--accent);
 }
+
+.logo span svg {
+  height: 34px;
+  margin: 0;
+  animation: dice-roll 0.5s ease-in-out;
+}
+
 
 .menu-container {
   display: flex;
@@ -369,9 +380,8 @@ button {
   background: var(--multi-blue);
 }
 
-.multi-circle.black {
-  background: var(--multi-black);
-  border: 1px solid var(--primary-contrast);
+.multi-circle.red {
+  background: var(--multi-red);
 }
 
 .multi-circle.orange {
@@ -422,7 +432,7 @@ button {
 .create-color-btn {
   margin-top: auto;
   width: 100%;
-  border-radius: 12px;
+  border-radius: 8px;
   height: 40px;
   background: var(--bg);
   color: var(--text);
@@ -456,6 +466,11 @@ button {
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
   position: relative;
+  scrollbar-width: none;
+}
+
+.main-content::-webkit-scrollbar {
+  display: none;
 }
 
 /* search wrapper */
@@ -518,6 +533,8 @@ button {
   gap: 30px;
   width: 100%;
 }
+
+
 
 .main-container-header {
   display: flex;
@@ -650,7 +667,7 @@ button {
 
 .note-delete-btn svg,
 .note-fav-btn svg {
-  height: 19px;
+  height: 17px;
   stroke: var(--bg);
   fill: var(--bg);
 }

@@ -111,14 +111,14 @@ document.addEventListener('DOMContentLoaded', () => {
     note_card.innerHTML = `
       <textarea class="note-text-area">${text}</textarea>
       <div class="note-card-info">
-        <div class="current-date">
+        <div class="note-card-date">
           <span class="month">${months[full_date.getMonth()]}</span>
           <span class="day">${full_date.getDate()}</span>,
           <span class="year">${full_date.getFullYear()}</span>
         </div>
         <div style="display: flex; align-items: center; gap: 7px">
           <button class="note-fav-btn" aria-label="Favourite note">
-           <svg fill="" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 573.471 573.471" xml:space="preserve"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g> <path d="M377.631,180.344C364.166,117.92,335.402-13.66,266.247,8.984c-30.6,9.792-47.124,50.796-58.14,77.112 c-14.076,33.048-25.092,71.604-26.316,108.324C136.503,181.568,2.475,145.46,0.027,220.736 c-1.224,34.884,39.78,66.096,63.648,84.456c21.42,17.136,50.796,40.392,78.948,51.408c-22.644,29.987-39.168,66.708-52.632,100.979 c-13.464,34.272-26.928,75.276,7.344,100.368c55.692,41.004,149.94-66.708,182.988-113.832 c43.452,35.496,169.524,146.268,210.528,72.828c16.523-29.988-10.404-73.44-24.48-98.532c-11.016-18.972-29.376-58.14-50.184-76.5 c29.988-17.748,60.588-35.496,88.74-56.304c23.867-17.136,68.544-47.736,68.544-81.396 C573.471,133.22,431.486,172.388,377.631,180.344z"></path> </g> </g></svg>
+           <svg fill="" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 329.899 329.899" xml:space="preserve"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g> <path d="M260.086,0H69.846C54.368,0,41.788,12.58,41.788,28.04v287.428c0,4.78,2.366,9.235,6.308,11.926s8.965,3.255,13.417,1.495 l103.441-40.875l103.454,40.875c1.699,0.679,3.501,1.003,5.29,1.003c2.847,0,5.687-0.841,8.101-2.492 c3.957-2.684,6.312-7.146,6.312-11.919V28.04C288.123,12.58,275.543,0,260.086,0z M213.033,158.674l-25.137,18.264l9.596,29.556 c0.643,1.981-0.06,4.155-1.741,5.374c-0.853,0.606-1.837,0.919-2.822,0.919c-0.991,0-1.981-0.312-2.834-0.919l-25.134-18.261 l-25.136,18.261c-1.684,1.219-3.966,1.219-5.645,0c-1.678-1.219-2.405-3.387-1.753-5.374l9.61-29.556l-25.142-18.264 c-1.684-1.225-2.387-3.39-1.748-5.374c0.64-1.981,2.486-3.327,4.576-3.327h31.068l9.611-29.54c1.273-3.966,7.842-3.966,9.139,0 l9.599,29.54h31.075c2.084,0,3.921,1.346,4.569,3.327C215.423,155.278,214.714,157.449,213.033,158.674z"></path> </g> </g></svg>
           </button>
 
           <button class="note-delete-btn" aria-label="Delete note">
@@ -244,13 +244,6 @@ document.addEventListener('DOMContentLoaded', () => {
     e.stopPropagation();
   });
 
-  document.addEventListener('click', e => {
-    if (panel && !panel.contains(e.target)) {
-      panel.classList.remove('active');
-      localStorage.setItem('panel-state', 'close');
-    }
-  });
-
   const panelState = localStorage.getItem('panel-state');
   if (panelState === 'open') panel?.classList.add('active');
 
@@ -295,6 +288,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const pickerVal = picker?.value;
     if (pickerVal) createNote(pickerVal);
     if (panel?.classList.contains('active')) panel.classList.remove('active');
+    localStorage.removeItem('panel-state');
   });
 
   // the filters logic

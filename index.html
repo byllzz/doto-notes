@@ -19,28 +19,42 @@ What are you doing here?! you sneaky developer...
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Docket Notes | Organize Your Thoughts</title>
+  <title>Local Notes — Private Color-Coded Notes</title>
   <link rel="stylesheet" href="./style.css">
-  <meta name="title" content="Docket Notes — Minimalist Color-Coded Notes">
+  <meta name="title" content="Local Notes — Minimalist Color-Coded Notes">
   <meta name="description"
     content="A simple, fast, and local-first note-taking app. Organize your thoughts with custom colors, favorites, and real-time search.">
   <meta name="keywords" content="notes, productivity, docket, localstorage, task manager, color-coded notes">
   <meta name="author" content="Bilal Malik">
   <meta property="og:type" content="website">
-  <meta property="og:url" content="https://your-link-here.com/">
-  <meta property="og:title" content="Docket Notes — Minimalist Color-Coded Notes">
+  <meta property="og:url" content="https://local-notes.vercel.app/">
+  <meta property="og:title" content=" Local Notes — Minimalist Color-Coded Notes">
   <meta property="og:description"
     content="Organize your life with colorful notes. No server, no tracking, just your thoughts saved locally.">
   <meta name="theme-color" content="#ffd6a5">
+  <link rel="shortcut icon" href="./assets/logo.svg" type="image/x-icon">
 </head>
 
 <body>
   <div class="wrapper">
     <!-- this sidebar  -->
     <aside class="sidebar" aria-label="Sidebar">
-      <div class="logo">Docket <br>
-        <span>Notes</span>
-      </div>
+      <a href="https://local-notes.vercel.app" class="logo">
+        <span>Local <svg class="logo-svg" viewBox="0 -0.5 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+            <g id="SVGRepo_iconCarrier">
+              <path fill-rule="evenodd" clip-rule="evenodd"
+                d="M9.808 4.00001H15.329C15.3863 4.00001 15.4433 4.00367 15.5 4.01101C17.7473 4.16817 19.4924 6.0332 19.5 8.28601V14.715C19.4917 17.0871 17.5641 19.0044 15.192 19H9.808C7.43551 19.0044 5.50772 17.0865 5.5 14.714V8.28601C5.50772 5.91353 7.43551 3.99558 9.808 4.00001Z"
+                stroke="#00ff00" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+              <path
+                d="M19.5 9.03599C19.9142 9.03599 20.25 8.7002 20.25 8.28599C20.25 7.87177 19.9142 7.53599 19.5 7.53599V9.03599ZM15.5 8.28599H14.75C14.75 8.7002 15.0858 9.03599 15.5 9.03599V8.28599ZM16.25 4.01099C16.25 3.59677 15.9142 3.26099 15.5 3.26099C15.0858 3.26099 14.75 3.59677 14.75 4.01099H16.25ZM14.5 12.75C14.9142 12.75 15.25 12.4142 15.25 12C15.25 11.5858 14.9142 11.25 14.5 11.25V12.75ZM8.5 11.25C8.08579 11.25 7.75 11.5858 7.75 12C7.75 12.4142 8.08579 12.75 8.5 12.75V11.25ZM11.5 9.74999C11.9142 9.74999 12.25 9.4142 12.25 8.99999C12.25 8.58577 11.9142 8.24999 11.5 8.24999V9.74999ZM8.5 8.24999C8.08579 8.24999 7.75 8.58577 7.75 8.99999C7.75 9.4142 8.08579 9.74999 8.5 9.74999V8.24999ZM15.5 15.75C15.9142 15.75 16.25 15.4142 16.25 15C16.25 14.5858 15.9142 14.25 15.5 14.25V15.75ZM8.5 14.25C8.08579 14.25 7.75 14.5858 7.75 15C7.75 15.4142 8.08579 15.75 8.5 15.75V14.25ZM19.5 7.53599H15.5V9.03599H19.5V7.53599ZM16.25 8.28599V4.01099H14.75V8.28599H16.25ZM14.5 11.25H8.5V12.75H14.5V11.25ZM11.5 8.24999H8.5V9.74999H11.5V8.24999ZM15.5 14.25H8.5V15.75H15.5V14.25Z"
+                fill="#00ff00"></path>
+            </g>
+          </svg> </span>
+        <br>
+        Notes
+      </a>
 
       <nav class="menu-container" aria-label="Controls">
         <button id="add-btn" class="add-button" aria-pressed="false">+</button>
@@ -82,7 +96,7 @@ What are you doing here?! you sneaky developer...
                 <span class="multi-circle yellow"></span>
                 <span class="multi-circle bisque"></span>
                 <span class="multi-circle blue"></span>
-                <span class="multi-circle black"></span>
+                <span class="multi-circle red"></span>
                 <span class="multi-circle orange"></span>
               </div>
               <button class="create-color-btn">Create note with created color</button>
