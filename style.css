@@ -1,0 +1,966 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
+
+:root {
+  /* ============================
+     Typography
+     ============================ */
+  --font-family: "Outfit", sans-serif;
+  --base-font-size: 16px;
+
+  /* ============================
+     Layout sizes
+     ============================ */
+  --sidebar-width: 120px;
+  --wrapper-gap: 30px;
+  --wrapper-radius: 22px;
+  --notes-gap: 40px;
+  --search-width: 350px;
+  --notes-grid-columns: 4;
+  --notes-grid-columns-mobile: 2;
+  --notes-grid-columns-xs: 1;
+  --note-card-height: 300px;
+
+  /* ============================
+     Core colors (Light theme)
+     ============================ */
+  --bg: #ffffff;
+  /* page background */
+  --text: #000000;
+  /* main text */
+  --muted: #000000;
+  /* secondary text */
+  --muted-border: #000000;
+  /* borders, dividers */
+
+  --primary: #000000;
+  /* buttons / panels */
+  --primary-contrast: #ffffff;
+  /* text on primary */
+  --accent: #000000;
+  /* highlights / focus */
+
+  --input-bg: #ffffff;
+  /* inputs, small panels */
+  --panel-bg: #ffffff;
+  /* right panels / small wrappers */
+  --code-input-bg: #ffffff;
+  /* code inputs / color input */
+  --dice-btn-bg: #ffffff;
+  /* random button bg */
+
+  /* Multi-color palette fallback */
+  --multi-green: #00ff00;
+  --multi-yellow: #ffff00;
+  --multi-bisque: #ffe4c4;
+  --multi-blue: #0000ff;
+  --multi-black: #000000;
+  --multi-orange: #ff8000;
+
+  /* Custom color circles */
+  --color-orange: #ffab91;
+  --color-yellow: #ffe082;
+  --color-green: #80cbc4;
+  --color-blue: #90caf9;
+  --color-purple: #b39ddb;
+
+  /* ============================
+     Shadows & effects
+     ============================ */
+  --shadow-1: 0 10px 25px rgba(0, 0, 0, 0.5);
+  --inset-shadow: inset 0 0 5px rgba(0, 0, 0, 0.1);
+
+  /* ============================
+     Radii & sizing
+     ============================ */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+
+  /* ============================
+     Transitions
+     ============================ */
+  --ease-1: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  --dur-1: 0.4s;
+  --dur-short: 0.25s;
+
+  /* ============================
+     Z-index
+     ============================ */
+  --z-top: 999;
+
+  /* ============================
+     Borders
+     ============================ */
+  --color-input-border: 1px solid var(--text);
+}
+
+
+
+*,
+*::after,
+*::before {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: var(--base-font-size);
+}
+
+body {
+  overflow-x: hidden;
+  line-height: 1.45;
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: var(--font-family);
+  width: 100%;
+  height: 100vh;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+  margin: 0;
+  border: none;
+  background: transparent;
+  font-family: inherit;
+}
+
+/* ============================
+   Layout wrapper
+   ============================ */
+.wrapper {
+  width: 100%;
+  max-width: 99%;
+  margin: auto;
+  height: 100vh;
+  display: grid;
+  grid-template-columns: var(--sidebar-width) 1fr;
+  gap: var(--wrapper-gap);
+  border-radius: var(--wrapper-radius);
+
+  /* prevent double scrollbars: page-level scroll is off,
+     right-panel becomes the scroll container */
+  overflow: hidden;
+}
+
+/* ============================
+   Sidebar
+   ============================ */
+.sidebar {
+  width: 100%;
+  height: 100vh;
+  border-right: 1px solid var(--muted-border);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 40px;
+
+  /* make sidebar stay visible while right-panel scrolls */
+  position: sticky;
+  top: 0;
+  z-index: 2;
+
+  font-family: sans-serif;
+  background: transparent;
+  overflow: visible;
+  /* allow popouts/menus to overflow the sidebar */
+}
+
+.logo {
+  font-weight: bold;
+  margin-bottom: 50px;
+  font-size: 25px;
+  font-family: var(--font-family);
+  line-height: .95;
+}
+
+.logo span {
+  position: relative;
+  left: 18px;
+  color: #00ff00;
+}
+
+.menu-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* ============================
+   Plus / Add Button
+   ============================ */
+.add-button {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  border: none;
+  background-color: var(--primary);
+  color: var(--primary-contrast);
+  font-size: 24px;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+  z-index: 2;
+}
+
+.add-button.rotate {
+  transform: rotate(45deg);
+}
+
+.add-button:active {
+  transform: scale(0.9);
+}
+
+/* ============================
+   Color circles container & items
+   ============================ */
+.color-options {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 15px;
+  gap: 12px;
+}
+
+.color-circle {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  opacity: 0;
+  transform: translateY(-20px);
+  transition: all var(--dur-1) var(--ease-1);
+  cursor: pointer;
+  position: relative;
+}
+
+.color-options.show .color-circle {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Staggered delays (keeps same order as you had) */
+.color-options.show .color-circle:nth-child(1) {
+  transition-delay: 0.05s;
+}
+
+.color-options.show .color-circle:nth-child(2) {
+  transition-delay: 0.10s;
+}
+
+.color-options.show .color-circle:nth-child(3) {
+  transition-delay: 0.15s;
+}
+
+.color-options.show .color-circle:nth-child(4) {
+  transition-delay: 0.20s;
+}
+
+.color-options.show .color-circle:nth-child(5) {
+  transition-delay: 0.25s;
+}
+
+/* named color utility classes */
+.orange {
+  background-color: var(--color-orange);
+}
+
+.yellow {
+  background-color: var(--color-yellow);
+}
+
+.green {
+  background-color: var(--color-green);
+}
+
+.blue {
+  background-color: var(--color-blue);
+}
+
+.purple {
+  background-color: var(--color-purple);
+}
+
+.multi-color-wrapper {
+  display: flex;
+  position: relative;
+  transition: var(--ease-1);
+}
+
+/* Multicolor trigger */
+.multi-color-trigger {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  cursor: pointer;
+  background: linear-gradient(135deg,
+      var(--color-orange),
+      var(--color-yellow),
+      var(--color-green),
+      var(--color-blue),
+      var(--color-purple));
+  opacity: 0;
+  transform: translateY(-20px);
+  transition: all var(--dur-1) var(--ease-1);
+  position: relative;
+}
+
+.multi-color-trigger.show {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.20s;
+}
+
+/* ============================
+   Right color panel
+   ============================ */
+.color-panel {
+  position: absolute;
+  bottom: -180px;
+  left: 50px;
+  width: 300px;
+  height: 220px;
+  background: var(--primary);
+  color: var(--primary-contrast);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  transition: var(--ease-1);
+  z-index: var(--z-top);
+  border-radius: 10px;
+  opacity: 0;
+  visibility: hidden;
+}
+
+.color-panel.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.color-panel h3 {
+  font-size: 18px;
+}
+
+/* Inputs */
+.color-code-input {
+  width: 100%;
+  padding: 10px;
+  border-radius: var(--radius-sm);
+  border: none;
+  background: var(--code-input-bg);
+  color: var(--accent);
+  outline: none;
+  font-family: monospace;
+}
+
+/* Random/dice button */
+.random-color-btn {
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--dice-btn-bg);
+}
+
+.random-color-btn svg {
+  height: 33px;
+  fill: var(--accent);
+}
+
+
+/* when active (animation class toggled in JS) */
+.random-color-btn.animate svg {
+  animation: dice-roll 0.5s ease-in-out;
+}
+
+@keyframes dice-roll {
+  0% {
+    transform: rotate(0deg) translateX(0);
+  }
+
+  20% {
+    transform: rotate(-35deg) translateX(-3px);
+  }
+
+  40% {
+    transform: rotate(15deg) translateX(3px);
+  }
+
+  60% {
+    transform: rotate(-30deg) translateX(-2px);
+  }
+
+  80% {
+    transform: rotate(10deg) translateX(2px);
+  }
+
+  100% {
+    transform: rotate(0deg) translateX(0);
+  }
+}
+
+/* ============================
+   Top colors
+   ============================ */
+.top-colors {
+  display: flex;
+  gap: 10px;
+}
+
+.multi-circle {
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+  transition: all 0.4s var(--ease-1);
+}
+
+/* reuse your vars for multi-circle fallback colors */
+.multi-circle.green {
+  background: var(--multi-green);
+}
+
+.multi-circle.yellow {
+  background: var(--multi-yellow);
+}
+
+.multi-circle.bisque {
+  background: var(--multi-bisque);
+}
+
+.multi-circle.blue {
+  background: var(--multi-blue);
+}
+
+.multi-circle.black {
+  background: var(--multi-black);
+  border: 1px solid var(--primary-contrast);
+}
+
+.multi-circle.orange {
+  background: var(--multi-orange);
+}
+
+/* ============================
+   Color input wrapper (grid layout kept)
+   ============================ */
+.color-input-wrapper {
+  display: grid;
+  grid-template-columns: 1fr 40px 40px;
+  align-items: center;
+  transition: all var(--dur-1) var(--ease-1);
+  cursor: pointer;
+  gap: 4px;
+  z-index: var(--z-top);
+}
+
+#colorInput {
+  width: 40px;
+  height: 40px;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  padding: 0;
+  background: var(--input-bg);
+  transition: all 0.3s ease;
+  box-shadow: var(--inset-shadow);
+  border: var(--color-input-border);
+}
+
+#colorInput:hover {
+  transform: scale(1.05);
+  box-shadow: inset 0 0 8px rgba(255, 255, 255, 0.3);
+}
+
+#colorInput::-webkit-color-swatch-wrapper {
+  padding: 0;
+}
+
+#colorInput::-webkit-color-swatch {
+  border-radius: var(--radius-md);
+  border: none;
+}
+
+#colorInput:focus {
+  outline: 2px solid var(--accent);
+}
+
+/* Button */
+.create-color-btn {
+  margin-top: auto;
+  width: 100%;
+  border-radius: 12px;
+  height: 40px;
+  background: var(--bg);
+  color: var(--text);
+  font-weight: 600;
+}
+
+/* ============================
+   App settings (settings button & menu)
+   ============================ */
+.portfolio {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: var(--z-top);
+  font-family: sans-serif;
+}
+
+.portfolio img {
+  height: 60px;
+  width: 60px;
+  border-radius: 50%;
+}
+
+/* ============================
+   Right panel / search
+   ============================ */
+/* make right panel the scrolling container */
+.right-panel {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 30px;
+  padding: 20px;
+  width: 100%;
+
+  /* make this the scroll area */
+  height: 100vh;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  position: relative;
+}
+
+/* header-row sticky note (optional)
+.header-row { position: sticky; top: 0; z-index: 3; background: var(--panel-bg); } */
+
+/* search */
+.search-wrapper {
+  display: flex;
+  align-items: center;
+  height: 45px;
+  width: var(--search-width);
+  margin-top: 15px;
+  gap: 10px;
+  border-radius: 999px;
+  background: linear-gradient(135deg,
+      rgba(255, 255, 255, 0.75),
+      rgba(255, 255, 255, 0.45));
+  backdrop-filter: blur(14px) saturate(180%);
+  -webkit-backdrop-filter: blur(14px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  box-shadow:
+    inset 0 1px 1px rgba(255, 255, 255, 0.6),
+    0 8px 24px rgba(0, 0, 0, 0.12);
+  transition: background 0.3s ease, box-shadow 0.3s ease;
+}
+
+.search-wrapper span {
+  display: inline-block;
+  max-width: 100%;
+  overflow: hidden;
+  position: relative;
+  top: 3px;
+  left: 8px;
+}
+
+.search-wrapper span svg {
+  height: 30px;
+  stroke: var(--accent);
+}
+
+.search-wrapper input[type="text"] {
+  width: 100%;
+  height: 100%;
+  border-radius: 24px;
+  padding: 5px 10px;
+  font-size: 16px;
+  background-color: transparent;
+  border: none;
+  color: var(--accent);
+  outline: none;
+}
+
+.search-wrapper input:focus {
+  background-color: transparent;
+  border: none;
+}
+
+/* ============================
+   Main content / notes grid
+   ============================ */
+.main-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 30px;
+  width: 100%;
+}
+
+.main-container-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.main-container-header h1 {
+  font-size: 40px;
+  color: var(--text);
+}
+
+.notes-filters-btns {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  height: 40px;
+  border-radius: 999px;
+  background: linear-gradient(135deg,
+      rgba(255, 255, 255, 0.75),
+      rgba(255, 255, 255, 0.45));
+  backdrop-filter: blur(14px) saturate(180%);
+  -webkit-backdrop-filter: blur(14px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  box-shadow:
+    inset 0 1px 1px rgba(255, 255, 255, 0.6),
+    0 8px 24px rgba(0, 0, 0, 0.12);
+  transition: background 0.3s ease, box-shadow 0.3s ease;
+
+}
+
+.filter-btn {
+  height: 100%;
+  padding: 8px 22px;
+  text-align: center;
+  color: var(--accent);
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}
+
+.filter-btn.activeFilter {
+  background-color: var(--accent);
+  color: var(--bg);
+}
+
+/* notes grid */
+.notes-grid {
+  display: grid;
+  grid-template-columns: repeat(var(--notes-grid-columns), 1fr);
+  gap: var(--notes-gap);
+  width: 100%;
+}
+
+.note-card {
+  height: var(--note-card-height);
+  padding: 20px;
+  width: 100%;
+  border-radius: 20px;
+  font-size: 18px;
+  font-weight: 500;
+  position: relative;
+  opacity: 0;
+  transform: translateX(-50px);
+  transition: all 0.5s var(--ease-1);
+  background: transparent;
+}
+
+.note-card.showCard {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.note-text-area {
+  min-width: 100%;
+  min-height: 83%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  line-height: 1;
+  font-size: 17px;
+  background-color: transparent;
+  border: none;
+  color: var(--text);
+  outline: none;
+  font-family: var(--font-family);
+  z-index: 2;
+  resize: none;
+  caret-color: var(--text);
+  font-weight: 600;
+  box-sizing: border-box;
+  scrollbar-width: none;
+}
+
+#note-text::-webkit-scrollbar {
+  display: none;
+}
+
+.note-card-info {
+  position: absolute;
+  bottom: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 90%;
+  margin: auto;
+  z-index: 10;
+}
+
+.note-card-info .note-card-date {
+  font-size: 14px;
+  font-family: var(--font-family);
+}
+
+.note-delete-btn,
+.note-fav-btn {
+  height: 35px;
+  width: 35px;
+  border-radius: 50%;
+  background-color: var(--primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  right: 10px;
+}
+
+.note-delete-btn svg,
+.note-fav-btn svg {
+  height: 19px;
+  stroke: var(--bg);
+  fill: var(--bg);
+}
+
+/* ============================
+   Color-circle delete X (real element)
+   ============================ */
+.color-circle .delete-color {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  width: 16px;
+  height: 16px;
+  background: var(--accent);
+  color: var(--bg);
+  font-size: 12px;
+  font-weight: bold;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  opacity: 0;
+  transform: scale(0);
+  transition: 0.2s ease;
+  cursor: pointer;
+}
+
+.color-circle:hover .delete-color {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.toast {
+  position: fixed;
+  top: 20px;
+  right: -400px;
+  width: 250px;
+  padding: 14px 16px;
+  border-radius: 14px;
+  font-size: 15px;
+  font-weight: 500;
+  font-family: "Outfit", sans-serif;
+  background-color: var(--accent);
+  color: var(--bg);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  overflow: hidden;
+  z-index: 9999;
+  transition: right 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+    opacity 0.3s ease;
+  opacity: 0;
+}
+
+/* show */
+.toast.show {
+  right: 20px;
+  opacity: 1;
+}
+
+/* hide */
+.toast.hide {
+  right: -400px;
+  opacity: 0;
+}
+
+/* progress bar */
+.toast-progress {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 3px;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.6);
+  animation: progress 3s linear forwards;
+}
+
+@keyframes progress {
+  from {
+    width: 100%;
+  }
+
+  to {
+    width: 0%;
+  }
+}
+
+/* types */
+.toast-success {
+  background: linear-gradient(135deg, #22c55e, #16a34a);
+}
+
+.toast-danger {
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+}
+
+.toast-info {
+  background: linear-gradient(135deg, #111, #1a1a1a);
+}
+
+.toast-text {
+  flex: 1;
+}
+
+/* faqs */
+.toggle-faqs-btn {
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  position: absolute;
+  bottom: 15px;
+  right: 15px;
+  background-color: var(--accent);
+  color: var(--bg);
+  z-index: 99;
+}
+
+.toggle-faqs-btn:hover {
+  background-color: #111;
+}
+
+.toggle-faqs-btn svg {
+  height: 24px;
+}
+
+.faq-container {
+  padding: 15px;
+  max-width: 400px;
+  position: fixed;
+  bottom: 70px;
+  right: 10px;
+  opacity: 0;
+  transition: var(--ease-1);
+  border-radius: 8px;
+  background: linear-gradient(135deg,
+      rgba(255, 255, 255, 0.75),
+      rgba(255, 255, 255, 0.45));
+  backdrop-filter: blur(14px) saturate(180%);
+  -webkit-backdrop-filter: blur(14px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  box-shadow:
+    inset 0 1px 1px rgba(255, 255, 255, 0.6),
+    0 8px 24px rgba(0, 0, 0, 0.12);
+  transition: background 0.3s ease, box-shadow 0.3s ease;
+}
+
+.faq-container.showFaqs {
+  opacity: 1;
+  /* right: 10px; */
+}
+
+.faq-item {
+  border-bottom: 1px solid #eee;
+  margin-bottom: 10px;
+}
+
+.faq-question {
+  width: 100%;
+  text-align: left;
+  padding: 12px 5px;
+  background: none;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: color 0.3s;
+}
+
+.faq-question:hover {
+  color: #666;
+}
+
+.faq-question::after {
+  content: '+';
+  font-size: 1.2rem;
+}
+
+.faq-item.active .faq-question::after {
+  content: '−';
+}
+
+.faq-answer {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease-out;
+  font-size: 0.9rem;
+  color: #555;
+  line-height: 1.4;
+}
+
+.faq-item.active .faq-answer {
+  max-height: 150px;
+  /* Adjust based on content length */
+  padding-bottom: 10px;
+}
+
+/* ============================
+   Small responsive tweaks
+   ============================ */
+@media (max-width: 1000px) {
+  .notes-grid {
+    grid-template-columns: repeat(var(--notes-grid-columns-mobile), 1fr);
+  }
+
+  .search-wrapper {
+    width: 240px;
+  }
+}
+
+@media (max-width: 600px) {
+  .wrapper {
+    grid-template-columns: 1fr;
+  }
+
+  .notes-grid {
+    grid-template-columns: repeat(var(--notes-grid-columns-xs), 1fr);
+    gap: 20px;
+  }
+
+  .search-wrapper {
+    width: 100%;
+  }
+}

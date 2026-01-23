@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Docket Notes | Organize Your Thoughts</title>
+  <link rel="stylesheet" href="style.css">
+  <meta name="title" content="Docket Notes — Minimalist Color-Coded Notes">
+  <meta name="description"
+    content="A simple, fast, and local-first note-taking app. Organize your thoughts with custom colors, favorites, and real-time search.">
+  <meta name="keywords" content="notes, productivity, docket, localstorage, task manager, color-coded notes">
+  <meta name="author" content="Bilal Malik">
+
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://your-link-here.com/">
+  <meta property="og:title" content="Docket Notes — Minimalist Color-Coded Notes">
+  <meta property="og:description"
+    content="Organize your life with colorful notes. No server, no tracking, just your thoughts saved locally.">
+  <meta property="og:image" content="meta-image-preview.png">
+
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="https://your-link-here.com/">
+  <meta property="twitter:title" content="Docket Notes — Minimalist Color-Coded Notes">
+  <meta property="twitter:description" content="Simple, fast, color-coded note-taking right in your browser.">
+  <meta property="twitter:image" content="meta-image-preview.png">
+
+  <meta name="theme-color" content="#ffd6a5">
+</head>
+
+<body>
+  <div class="wrapper">
+    <!-- Sidebar: fixed / sticky -->
+    <aside class="sidebar" aria-label="Sidebar">
+      <div class="logo">Docket <br>
+        <span>Notes</span>
+      </div>
+
+      <nav class="menu-container" aria-label="Controls">
+        <button id="add-btn" class="add-button" aria-pressed="false">+</button>
+
+        <div id="color-options" class="color-options" aria-hidden="false">
+          <div class="color-circle orange" role="button" tabindex="0" aria-label="color orange"></div>
+          <div class="color-circle yellow" role="button" tabindex="0" aria-label="color yellow"></div>
+          <div class="color-circle green" role="button" tabindex="0" aria-label="color green"></div>
+          <div class="color-circle blue" role="button" tabindex="0" aria-label="color blue"></div>
+          <div class="color-circle purple" role="button" tabindex="0" aria-label="color purle"></div>
+          <!-- Multicolor trigger -->
+          <div class="multi-color-wrapper">
+            <div class="multi-color-trigger" aria-label="Open color creator"></div>
+            <div class="color-panel" aria-hidden="true">
+              <h3>Create Custom Color Note</h3>
+              <div class="color-input-wrapper">
+                <input type="text" class="color-code-input" placeholder="Enter color" />
+                <input type="color" value="#ffff00" id="colorInput" aria-label="Pick a color">
+                <button class="random-color-btn">
+                  <svg fill="" viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg">
+                    <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                    <g id="SVGRepo_iconCarrier">
+                      <g fill-rule="evenodd">
+                        <path
+                          d="M47.895 88.097c.001-4.416 3.064-9.837 6.854-12.117l66.257-39.858c3.785-2.277 9.915-2.277 13.707.008l66.28 39.934c3.786 2.28 6.853 7.703 6.852 12.138l-.028 79.603c-.001 4.423-3.069 9.865-6.848 12.154l-66.4 40.205c-3.781 2.29-9.903 2.289-13.69-.01l-66.167-40.185c-3.78-2.295-6.842-7.733-6.84-12.151l.023-79.72zm13.936-6.474l65.834 36.759 62.766-36.278-62.872-36.918L61.83 81.623zM57.585 93.52c0 1.628-1.065 71.86-1.065 71.86-.034 2.206 1.467 4.917 3.367 6.064l61.612 37.182.567-77.413s-64.48-39.322-64.48-37.693zm76.107 114.938l60.912-38.66c2.332-1.48 4.223-4.915 4.223-7.679V93.125l-65.135 37.513v77.82z">
+                        </path>
+                        <path
+                          d="M77.76 132.287c-4.782 2.762-11.122.735-14.16-4.526-3.037-5.261-1.622-11.765 3.16-14.526 4.783-2.762 11.123-.735 14.16 4.526 3.038 5.261 1.623 11.765-3.16 14.526zm32 21c-4.782 2.762-11.122.735-14.16-4.526-3.037-5.261-1.622-11.765 3.16-14.526 4.783-2.762 11.123-.735 14.16 4.526 3.038 5.261 1.623 11.765-3.16 14.526zm-32 16c-4.782 2.762-11.122.735-14.16-4.526-3.037-5.261-1.622-11.765 3.16-14.526 4.783-2.762 11.123-.735 14.16 4.526 3.038 5.261 1.623 11.765-3.16 14.526zm32 21c-4.782 2.762-11.122.735-14.16-4.526-3.037-5.261-1.622-11.765 3.16-14.526 4.783-2.762 11.123-.735 14.16 4.526 3.038 5.261 1.623 11.765-3.16 14.526zm78.238-78.052c-4.783-2.762-11.122-.735-14.16 4.526-3.037 5.261-1.623 11.765 3.16 14.526 4.783 2.762 11.123.735 14.16-4.526 3.038-5.261 1.623-11.765-3.16-14.526zm-16.238 29c-4.782-2.762-11.122-.735-14.16 4.526-3.037 5.261-1.622 11.765 3.16 14.526 4.783 2.762 11.123.735 14.16-4.526 3.038-5.261 1.623-11.765-3.16-14.526zm-17 28c-4.782-2.762-11.122-.735-14.16 4.526-3.037 5.261-1.622 11.765 3.16 14.526 4.783 2.762 11.123.735 14.16-4.526 3.038-5.261 1.623-11.765-3.16-14.526zM128.5 69c-6.351 0-11.5 4.925-11.5 11s5.149 11 11.5 11S140 86.075 140 80s-5.149-11-11.5-11z">
+                        </path>
+                      </g>
+                    </g>
+                  </svg>
+                </button>
+              </div>
+              <div class="top-colors">
+                <article>Top Picks&nbsp;:</article>
+                <span class="multi-circle green"></span>
+                <span class="multi-circle yellow"></span>
+                <span class="multi-circle bisque"></span>
+                <span class="multi-circle blue"></span>
+                <span class="multi-circle black"></span>
+                <span class="multi-circle orange"></span>
+              </div>
+              <button class="create-color-btn">Create note with created color</button>
+            </div>
+          </div>
+      </nav>
+    </aside>
+
+    <!-- Right panel: scrollable content -->
+    <main class="right-panel" role="main" aria-label="Main content">
+      <div class="header-row">
+        <div class="search-wrapper">
+          <span>
+            <svg viewBox="0 -0.5 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+              <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+              <g id="SVGRepo_iconCarrier">
+                <path fill-rule="evenodd" clip-rule="evenodd"
+                  d="M5.5 10.7655C5.50003 8.01511 7.44296 5.64777 10.1405 5.1113C12.8381 4.57483 15.539 6.01866 16.5913 8.55977C17.6437 11.1009 16.7544 14.0315 14.4674 15.5593C12.1804 17.0871 9.13257 16.7866 7.188 14.8415C6.10716 13.7604 5.49998 12.2942 5.5 10.7655Z"
+                  stroke="" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                <path d="M17.029 16.5295L19.5 19.0005" stroke="" stroke-width="1.5" stroke-linecap="round"
+                  stroke-linejoin="round"></path>
+              </g>
+            </svg>
+          </span>
+          <input type="text" id="note-search" placeholder="Search notes..." autocomplete="off"
+            aria-label="Search notes">
+        </div>
+
+
+      </div>
+
+      <!-- Main content / notes -->
+      <section class="main-content" aria-label="Notes area">
+        <header class="main-container-header">
+          <h1>Your Notes</h1>
+          <div class="notes-filters-btns">
+            <button class="filter-btn activeFilter" data-filter="all">All Notes</button>
+            <button class="filter-btn" data-filter="favourite">Favourites</button>
+          </div>
+        </header>
+
+        <div id="notes-grid" class="notes-grid" aria-live="polite" aria-label="Notes grid">
+          <!-- notes will be injected here -->
+        </div>
+      </section>
+
+
+      <!-- faqs -->
+      <button class="toggle-faqs-btn">
+        <svg fill="#ffffff" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 202.423 202.423" xml:space="preserve">
+          <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+          <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+          <g id="SVGRepo_iconCarrier">
+            <g>
+              <path
+                d="M87.416,186.643c-4.359,0-7.885,3.541-7.885,7.874c0,4.362,3.525,7.906,7.885,7.906c4.357,0,7.885-3.544,7.885-7.906 C95.301,190.184,91.774,186.643,87.416,186.643z">
+              </path>
+              <path
+                d="M101.212,0c-34.694,0-62.92,28.226-62.92,62.92c0,4.142,3.358,7.5,7.5,7.5c4.142,0,7.5-3.358,7.5-7.5 c0-26.423,21.497-47.92,47.92-47.92c26.422,0,47.918,21.497,47.918,47.92c0,26.425-21.496,47.923-47.918,47.923 c-0.259,0-0.516,0.013-0.769,0.039c-11.128,0.4-20.088,9.36-20.488,20.487c-0.026,0.253-0.039,0.509-0.039,0.769v30.922 c0,4.142,3.358,7.5,7.5,7.5c4.142,0,7.5-3.358,7.5-7.5v-30.922c0-3.471,2.824-6.295,6.296-6.295 c34.693,0,62.918-28.227,62.918-62.923C164.13,28.226,135.906,0,101.212,0z">
+              </path>
+            </g>
+          </g>
+        </svg>
+      </button>
+      <div class="faq-container">
+        <h3>Frequently Asked Questions</h3>
+
+        <div class="faq-item">
+          <button class="faq-question">Where are my notes saved?</button>
+          <div class="faq-answer">
+            <p>Your notes are saved locally in your browser's <b>LocalStorage</b>. This means they stay on your device
+              and aren't sent to any server.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">Why did the default notes disappear?</button>
+          <div class="faq-answer">
+            <p>The 5 starter notes only appear on your very first visit. Once you delete them, they stay gone to keep
+              your workspace yours!</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">How do I create a new note?</button>
+          <div class="faq-answer">
+            <p>Click the <b>"+"</b> button to see the color options. Pick a color circle to spawn a new note, or use the
+              <b>Multi-color</b> icon to choose a custom shade.
+            </p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">How do Favorites work?</button>
+          <div class="faq-answer">
+            <p>Click the <b>Heart (❤️)</b> icon on any note to mark it as a favorite. You can then use the "Favourites"
+              filter at the top to see only your starred notes.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">How can I find a specific note?</button>
+          <div class="faq-answer">
+            <p>Use the <b>Search Bar</b> at the top. It filters your notes in real-time based on the text inside them.
+              It even works combined with your category filters!</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">How do I delete a note?</button>
+          <div class="faq-answer">
+            <p>Click the <b>Trash Can</b> icon at the bottom right of any note. Careful—this action is permanent and
+              cannot be undone!</p>
+          </div>
+        </div>
+      </div>
+
+
+    </main>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+
+
+</html>
