@@ -1,8 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-  /************************************************************************
-   *  ELEMENT LOOKUPS
-   ************************************************************************/
-
+  // all selectors that are used are below
   const addBtn = document.getElementById('add-btn');
   const colorOptions = document.getElementById('color-options');
   const colorInputWrapper = document.querySelector('.color-input-wrapper');
@@ -22,18 +19,13 @@ document.addEventListener('DOMContentLoaded', () => {
   const createCustomColorNoteBtn = document.querySelector('.create-color-btn');
 
   const filterBtns = document.querySelectorAll('.filter-btn');
-
-  /************************************************************************
-   *  STORAGE KEYS & STATE
-   ************************************************************************/
+  // all used local storage keys
   const STORAGE_KEY_NOTES = 'note-card';
   const STORAGE_KEY_COLOR_WRAPPER = 'color-wrapper-state';
   const STORAGE_KEY_NOTE_FILTERS = 'note-filters';
   const STORAGE_KEY_ACTIVE_FILTER = 'active-filter';
 
-  /************************************************************************
-   *  HELPERS: filters stored as space-separated tokens in data-filter-value
-   ************************************************************************/
+  // helpers::
   function getFilters(note) {
     return (note?.dataset?.filterValue || 'all').split(' ').filter(Boolean);
   }
@@ -42,9 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
     note.dataset.filterValue = filters.join(' ');
   }
 
-  /************************************************************************
-   *  ADD-BUTTON (open color options) behavior
-   ************************************************************************/
+  // main create note btn
   if (addBtn) {
     addBtn.addEventListener('click', () => {
       if (colorOptions) colorOptions.classList.toggle('show');
@@ -78,9 +68,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelector('.multi-color-trigger')?.classList.add('show');
   }
 
-  /************************************************************************
-   *  CREATE NOTE
-   ************************************************************************/
+  // this will create the note with the exact color you choose in color-options
   function createNote(
     color = '#ffffff',
     text = 'This is Docket note.',
@@ -103,6 +91,7 @@ document.addEventListener('DOMContentLoaded', () => {
             .filter(Boolean),
     );
 
+    // this is note creation date
     const full_date = new Date();
     const months = [
       'Jan',
@@ -141,6 +130,7 @@ document.addEventListener('DOMContentLoaded', () => {
       </div>
     `;
 
+    // this is for note delete
     const deleteNodeBtn = note_card.querySelector('.note-delete-btn');
     if (deleteNodeBtn) {
       deleteNodeBtn.addEventListener('click', () => {
@@ -172,14 +162,11 @@ document.addEventListener('DOMContentLoaded', () => {
     uploadToStorage();
     saveNotesFilters();
 
-    // if (note_card) notificationAlert('Note created successfully!');
-    // Inside createNote function, wrap the alert:
+    // the alert
     if (isNew) notificationAlert('Note created successfully!');
   }
 
-  /************************************************************************
-   *  STORAGE FUNCTIONS
-   ************************************************************************/
+  // storage functions
   function uploadToStorage() {
     const allNotes = Array.from(document.querySelectorAll('.note-card')).map(card => {
       const txtEl = card.querySelector('.note-text-area');
@@ -221,9 +208,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  /************************************************************************
-   *  COLOR CIRCLE, SETTINGS, PANEL, RANDOM, MULTI-COLOR LOGIC
-   ************************************************************************/
+  //  custom color creation panel , with open the multicolor cirle.
   color_circles.forEach(circle => {
     circle.addEventListener('click', () => {
       const colorCircle_bg = window.getComputedStyle(circle).backgroundColor || '#ffffff';
@@ -280,6 +265,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // this is were the random color comes
   function getRandomColor() {
     return (
       '#' +
@@ -311,9 +297,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (panel?.classList.contains('active')) panel.classList.remove('active');
   });
 
-  /************************************************************************
-   *  FILTERS LOGIC
-   ************************************************************************/
+  // the filters logic
   function applyFilter(filterType) {
     const note_cards = notes_grid?.querySelectorAll('.note-card') || [];
     note_cards.forEach(note => {
@@ -385,9 +369,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  /************************************************************************
-   *  NOTIFICATION ALERT
-   ************************************************************************/
+  //  notification or alert same
   function notificationAlert(text, type = 'info') {
     const alert = document.createElement('div');
     alert.className = `toast toast-${type}`;
@@ -404,9 +386,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 1500);
   }
 
-  /************************************************************************
-   *  SEARCH LOGIC
-   ************************************************************************/
+  // this is for search input
   const searchInput = document.getElementById('note-search');
   let currentSearchQuery = '';
   searchInput.addEventListener('input', () => {
@@ -428,9 +408,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  /************************************************************************
-   *  EMPTY STATE HANDLER
-   ************************************************************************/
+  // this will check empty state of notes_grid
   function updateEmptyState() {
     if (!notes_grid) return;
     const existingMsg = notes_grid.querySelector('.empty-msg');
@@ -456,14 +434,9 @@ document.addEventListener('DOMContentLoaded', () => {
     observer.observe(notes_grid, { childList: true });
   }
 
-  /************************************************************************
-   *  BOOTSTRAP DEFAULT NOTES (first-time load)
-   ************************************************************************/
-  /************************************************************************
-   * BOOTSTRAP DEFAULT NOTES (Only on very first visit)
-   ************************************************************************/
+  // these are default notes for making the UI perfect Look not empty empty
   function bootDefaultNotes() {
-    // Check if the user has ever visited before
+    // this checks if this page ever opens
     const hasVisited = localStorage.getItem('docket-has-visited');
 
     if (!hasVisited) {
@@ -476,7 +449,7 @@ document.addEventListener('DOMContentLoaded', () => {
         'Enjoy organizing your thoughts!',
       ];
 
-      // Create defaults
+      // create defaults notes
       defaultTexts.forEach((text, index) => {
         createNote(defaultColors[index], text, false); // isNew = false so it doesn't autofocus
       });
@@ -487,23 +460,19 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  /************************************************************************
-   * --- DOMContentLoaded BOOT LOGIC ---
-   ************************************************************************/
+  // these are all for running
 
-  // 1. Try to restore existing notes first
+  //  here trying to restore existing notes first
   const rawNotes = localStorage.getItem(STORAGE_KEY_NOTES);
   const parsedNotes = rawNotes ? JSON.parse(rawNotes) : [];
 
   if (parsedNotes.length > 0) {
-    // User has notes (defaults or their own), just restore them
     restoreNotesFromStorage();
   } else {
-    // Storage is empty. Is it because they deleted everything or first time?
     bootDefaultNotes();
   }
 
-  // 2. Restore filters and UI states
+  // this  restore filters and UI states
   restoreFilters();
 
   const savedActiveFilter = localStorage.getItem(STORAGE_KEY_ACTIVE_FILTER) || 'all';
@@ -514,35 +483,30 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   applyFilter(savedActiveFilter);
 
-  // 3. Hook empty state
+  // main : hook empty state
   hookEmptyStateListeners();
 
-  // faqs
-
+  // faqs section and its toggle::
   const toggleFaqsBtn = document.querySelector('.toggle-faqs-btn');
   const faqQuestions = document.querySelectorAll('.faq-question');
   const faqsContainer = document.querySelector('.faq-container');
 
-  // 1. Accordion Logic (Individual Questions)
   faqQuestions.forEach(question => {
     question.addEventListener('click', () => {
       const item = question.parentElement;
-
-      // Close other FAQ items (Accordion effect)
       document.querySelectorAll('.faq-item').forEach(otherItem => {
         if (otherItem !== item) otherItem.classList.remove('active');
       });
-
-      // Toggle current item
       item.classList.toggle('active');
     });
   });
 
-  // 2. Toggle Container Logic (Outside the loop!)
   if (toggleFaqsBtn && faqsContainer) {
     toggleFaqsBtn.addEventListener('click', () => {
       faqsContainer.classList.toggle('showFaqs');
       console.log('FAQ container toggled');
     });
   }
+
+  // all logics end , and I think this is enougf for right now ,
 });
