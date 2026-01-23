@@ -1,15 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
 
 :root {
-  /* ============================
-     Typography
-     ============================ */
   --font-family: "Outfit", sans-serif;
   --base-font-size: 16px;
 
-  /* ============================
-     Layout sizes
-     ============================ */
   --sidebar-width: 120px;
   --wrapper-gap: 30px;
   --wrapper-radius: 22px;
@@ -19,78 +13,40 @@
   --notes-grid-columns-mobile: 2;
   --notes-grid-columns-xs: 1;
   --note-card-height: 300px;
-
-  /* ============================
-     Core colors (Light theme)
-     ============================ */
   --bg: #ffffff;
-  /* page background */
   --text: #000000;
-  /* main text */
   --muted: #000000;
-  /* secondary text */
   --muted-border: #000000;
-  /* borders, dividers */
-
   --primary: #000000;
-  /* buttons / panels */
   --primary-contrast: #ffffff;
-  /* text on primary */
   --accent: #000000;
-  /* highlights / focus */
-
   --input-bg: #ffffff;
-  /* inputs, small panels */
   --panel-bg: #ffffff;
-  /* right panels / small wrappers */
   --code-input-bg: #ffffff;
-  /* code inputs / color input */
   --dice-btn-bg: #ffffff;
-  /* random button bg */
-
-  /* Multi-color palette fallback */
   --multi-green: #00ff00;
   --multi-yellow: #ffff00;
   --multi-bisque: #ffe4c4;
   --multi-blue: #0000ff;
   --multi-black: #000000;
   --multi-orange: #ff8000;
-
-  /* Custom color circles */
   --color-orange: #ffab91;
   --color-yellow: #ffe082;
   --color-green: #80cbc4;
   --color-blue: #90caf9;
   --color-purple: #b39ddb;
 
-  /* ============================
-     Shadows & effects
-     ============================ */
   --shadow-1: 0 10px 25px rgba(0, 0, 0, 0.5);
   --inset-shadow: inset 0 0 5px rgba(0, 0, 0, 0.1);
-
-  /* ============================
-     Radii & sizing
-     ============================ */
   --radius-sm: 8px;
   --radius-md: 12px;
   --radius-lg: 16px;
 
-  /* ============================
-     Transitions
-     ============================ */
   --ease-1: cubic-bezier(0.175, 0.885, 0.32, 1.275);
   --dur-1: 0.4s;
   --dur-short: 0.25s;
 
-  /* ============================
-     Z-index
-     ============================ */
   --z-top: 999;
-
-  /* ============================
-     Borders
-     ============================ */
   --color-input-border: 1px solid var(--text);
 }
 
@@ -132,9 +88,7 @@ button {
   font-family: inherit;
 }
 
-/* ============================
-   Layout wrapper
-   ============================ */
+/* main app wrapper */
 .wrapper {
   width: 100%;
   max-width: 99%;
@@ -144,15 +98,9 @@ button {
   grid-template-columns: var(--sidebar-width) 1fr;
   gap: var(--wrapper-gap);
   border-radius: var(--wrapper-radius);
-
-  /* prevent double scrollbars: page-level scroll is off,
-     right-panel becomes the scroll container */
   overflow: hidden;
 }
 
-/* ============================
-   Sidebar
-   ============================ */
 .sidebar {
   width: 100%;
   height: 100vh;
@@ -161,8 +109,6 @@ button {
   flex-direction: column;
   align-items: center;
   padding-top: 40px;
-
-  /* make sidebar stay visible while right-panel scrolls */
   position: sticky;
   top: 0;
   z-index: 2;
@@ -170,7 +116,6 @@ button {
   font-family: sans-serif;
   background: transparent;
   overflow: visible;
-  /* allow popouts/menus to overflow the sidebar */
 }
 
 .logo {
@@ -193,9 +138,7 @@ button {
   align-items: center;
 }
 
-/* ============================
-   Plus / Add Button
-   ============================ */
+/* add note btn */
 .add-button {
   width: 45px;
   height: 45px;
@@ -217,9 +160,7 @@ button {
   transform: scale(0.9);
 }
 
-/* ============================
-   Color circles container & items
-   ============================ */
+/* color circles options */
 .color-options {
   display: flex;
   flex-direction: column;
@@ -244,7 +185,6 @@ button {
   transform: translateY(0);
 }
 
-/* Staggered delays (keeps same order as you had) */
 .color-options.show .color-circle:nth-child(1) {
   transition-delay: 0.05s;
 }
@@ -265,7 +205,6 @@ button {
   transition-delay: 0.25s;
 }
 
-/* named color utility classes */
 .orange {
   background-color: var(--color-orange);
 }
@@ -292,7 +231,7 @@ button {
   transition: var(--ease-1);
 }
 
-/* Multicolor trigger */
+/* this is for multicolors or custom color */
 .multi-color-trigger {
   width: 20px;
   height: 20px;
@@ -316,9 +255,7 @@ button {
   transition-delay: 0.20s;
 }
 
-/* ============================
-   Right color panel
-   ============================ */
+/* the custom color panel */
 .color-panel {
   position: absolute;
   bottom: -180px;
@@ -359,7 +296,6 @@ button {
   font-family: monospace;
 }
 
-/* Random/dice button */
 .random-color-btn {
   height: 40px;
   width: 40px;
@@ -375,8 +311,6 @@ button {
   fill: var(--accent);
 }
 
-
-/* when active (animation class toggled in JS) */
 .random-color-btn.animate svg {
   animation: dice-roll 0.5s ease-in-out;
 }
@@ -407,9 +341,6 @@ button {
   }
 }
 
-/* ============================
-   Top colors
-   ============================ */
 .top-colors {
   display: flex;
   gap: 10px;
@@ -422,7 +353,6 @@ button {
   transition: all 0.4s var(--ease-1);
 }
 
-/* reuse your vars for multi-circle fallback colors */
 .multi-circle.green {
   background: var(--multi-green);
 }
@@ -448,9 +378,6 @@ button {
   background: var(--multi-orange);
 }
 
-/* ============================
-   Color input wrapper (grid layout kept)
-   ============================ */
 .color-input-wrapper {
   display: grid;
   grid-template-columns: 1fr 40px 40px;
@@ -492,7 +419,6 @@ button {
   outline: 2px solid var(--accent);
 }
 
-/* Button */
 .create-color-btn {
   margin-top: auto;
   width: 100%;
@@ -503,9 +429,6 @@ button {
   font-weight: 600;
 }
 
-/* ============================
-   App settings (settings button & menu)
-   ============================ */
 .portfolio {
   position: absolute;
   bottom: 20px;
@@ -521,10 +444,7 @@ button {
   border-radius: 50%;
 }
 
-/* ============================
-   Right panel / search
-   ============================ */
-/* make right panel the scrolling container */
+/* the right side of wrapper , where notes are exists  */
 .right-panel {
   display: flex;
   flex-direction: column;
@@ -532,16 +452,12 @@ button {
   gap: 30px;
   padding: 20px;
   width: 100%;
-
-  /* make this the scroll area */
   height: 100vh;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
   position: relative;
 }
 
-/* header-row sticky note (optional)
-.header-row { position: sticky; top: 0; z-index: 3; background: var(--panel-bg); } */
 
 /* search */
 .search-wrapper {
