@@ -401,7 +401,7 @@ document.addEventListener('DOMContentLoaded', () => {
       alert.classList.remove('show');
       alert.classList.add('hide');
       alert.addEventListener('transitionend', () => alert.remove(), { once: true });
-    }, 3000);
+    }, 1500);
   }
 
   /************************************************************************

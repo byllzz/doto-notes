@@ -458,8 +458,7 @@ button {
   position: relative;
 }
 
-
-/* search */
+/* search wrapper */
 .search-wrapper {
   display: flex;
   align-items: center;
@@ -511,9 +510,7 @@ button {
   border: none;
 }
 
-/* ============================
-   Main content / notes grid
-   ============================ */
+/* main content */
 .main-content {
   display: flex;
   flex-direction: column;
@@ -658,33 +655,7 @@ button {
   fill: var(--bg);
 }
 
-/* ============================
-   Color-circle delete X (real element)
-   ============================ */
-.color-circle .delete-color {
-  position: absolute;
-  top: -6px;
-  right: -6px;
-  width: 16px;
-  height: 16px;
-  background: var(--accent);
-  color: var(--bg);
-  font-size: 12px;
-  font-weight: bold;
-  border-radius: 50%;
-  display: grid;
-  place-items: center;
-  opacity: 0;
-  transform: scale(0);
-  transition: 0.2s ease;
-  cursor: pointer;
-}
-
-.color-circle:hover .delete-color {
-  opacity: 1;
-  transform: scale(1);
-}
-
+/* the alert or notification */
 .toast {
   position: fixed;
   top: 20px;
@@ -709,19 +680,16 @@ button {
   opacity: 0;
 }
 
-/* show */
 .toast.show {
   right: 20px;
   opacity: 1;
 }
 
-/* hide */
 .toast.hide {
   right: -400px;
   opacity: 0;
 }
 
-/* progress bar */
 .toast-progress {
   position: absolute;
   bottom: 0;
@@ -729,7 +697,7 @@ button {
   height: 3px;
   width: 100%;
   background: rgba(255, 255, 255, 0.6);
-  animation: progress 3s linear forwards;
+  animation: progress 1.5s linear forwards;
 }
 
 @keyframes progress {
@@ -742,24 +710,8 @@ button {
   }
 }
 
-/* types */
-.toast-success {
-  background: linear-gradient(135deg, #22c55e, #16a34a);
-}
+/* faqs wrapper */
 
-.toast-danger {
-  background: linear-gradient(135deg, #ef4444, #dc2626);
-}
-
-.toast-info {
-  background: linear-gradient(135deg, #111, #1a1a1a);
-}
-
-.toast-text {
-  flex: 1;
-}
-
-/* faqs */
 .toggle-faqs-btn {
   height: 50px;
   width: 50px;
@@ -803,7 +755,6 @@ button {
 
 .faq-container.showFaqs {
   opacity: 1;
-  /* right: 10px; */
 }
 
 .faq-item {
@@ -849,34 +800,7 @@ button {
 
 .faq-item.active .faq-answer {
   max-height: 150px;
-  /* Adjust based on content length */
   padding-bottom: 10px;
 }
 
-/* ============================
-   Small responsive tweaks
-   ============================ */
-@media (max-width: 1000px) {
-  .notes-grid {
-    grid-template-columns: repeat(var(--notes-grid-columns-mobile), 1fr);
-  }
-
-  .search-wrapper {
-    width: 240px;
-  }
-}
-
-@media (max-width: 600px) {
-  .wrapper {
-    grid-template-columns: 1fr;
-  }
-
-  .notes-grid {
-    grid-template-columns: repeat(var(--notes-grid-columns-xs), 1fr);
-    gap: 20px;
-  }
-
-  .search-wrapper {
-    width: 100%;
-  }
-}
+/* media queries */
