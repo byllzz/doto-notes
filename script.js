@@ -38,7 +38,10 @@ document.addEventListener('DOMContentLoaded', () => {
   if (addBtn) {
     addBtn.addEventListener('click', () => {
       if (colorOptions) colorOptions.classList.toggle('show');
-
+      const windowWidth = window.innerWidth;
+      if (windowWidth <= 480) {
+        if (colorOptions) colorInput.classList.add('show');
+      }
       const multiTrigger = document.querySelector('.multi-color-trigger');
       if (multiTrigger) {
         if (colorOptions && colorOptions.classList.contains('show'))
