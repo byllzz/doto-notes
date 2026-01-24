@@ -590,6 +590,7 @@ button {
   grid-template-columns: repeat(var(--notes-grid-columns), 1fr);
   gap: var(--notes-gap);
   width: 100%;
+  z-index: 10;
 }
 
 .note-card {
@@ -768,10 +769,12 @@ button {
     inset 0 1px 1px rgba(255, 255, 255, 0.6),
     0 8px 24px rgba(0, 0, 0, 0.12);
   transition: background 0.3s ease, box-shadow 0.3s ease;
+  z-index: 0 !important;
 }
 
 .faq-container.showFaqs {
   opacity: 1;
+  z-index: 20 !important;
 }
 
 .faq-item {

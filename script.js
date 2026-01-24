@@ -71,7 +71,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // this will create the note with the exact color you choose in color-options
   function createNote(
     color = '#ffffff',
-    text = 'This is Docket note.',
+    text = 'This is Doto note.',
     isNew = true,
     id = null,
     filters = ['all'],
@@ -431,26 +431,33 @@ document.addEventListener('DOMContentLoaded', () => {
   // these are default notes for making the UI perfect Look not empty empty
   function bootDefaultNotes() {
     // this checks if this page ever opens
-    const hasVisited = localStorage.getItem('docket-has-visited');
+    const hasVisited = localStorage.getItem('doto-has-visited');
 
     if (!hasVisited) {
       const defaultColors = ['#ffadad', '#ffd6a5', '#fdffb6', '#caffbf', '#9bf6ff'];
       const defaultTexts = [
-        'Welcome to Docket! 📝',
-        'Click here to edit this note.',
-        "Use the '+' button to add more notes.",
-        'Change colors or mark favourite notes.',
-        'Enjoy organizing your thoughts!',
+        'Click here to edit this note.\n\nTry typing your own text, pressing enter, or deleting content. Every change is saved automatically, so you never lose your thoughts.',
+
+        "Use the '+' button to add more notes.\n\nYou can create as many notes as you like. Organize them by color, category, or importance to keep your thoughts neat and tidy.",
+
+        'Change colors or mark favourite notes.\n\nMake important notes stand out by marking them as favourites ❤️. Choose different colors to visually categorize your ideas and projects.',
+
+        'Enjoy organizing your thoughts!\n\nUse filters, search, and the multi-color panel to find, sort, and customize your notes. Stay productive, creative, and on top of your tasks effortlessly!',
+
+        'Welcome to Doto Notes! 📝\n\nThis is your personal space to jot down ideas, reminders, to-dos, or anything you want to remember. Start by exploring the app and customizing your notes!',
       ];
 
       // create defaults notes
+      const defaultFavourites = [true, false, false, true, false]; // which default notes are favourites
+
       defaultTexts.forEach((text, index) => {
-        createNote(defaultColors[index], text, false); // isNew = false so it doesn't autofocus
+        const isFav = defaultFavourites[index];
+        const filters = isFav ? ['all', 'favourite'] : ['all'];
+        createNote(defaultColors[index], text, false, null, filters); // pass filters
       });
 
-      // Save them and set the "visited" flag permanently
       uploadToStorage();
-      localStorage.setItem('docket-has-visited', 'true');
+      localStorage.setItem('doto-has-visited', 'true');
     }
   }
 
