@@ -43,14 +43,6 @@ Doto Notes is a dynamic, interactive note-taking web app designed to make organi
 
 ---
 
-## Installation
-
-- [<b>GitHub</b>](https://github.com/byllzz/doto-notes) - Clone the repository.
-- [<b>VSCode / Any Code Editor</b>](https://code.visualstudio.com/) - Open and edit the code.
-- [<b>Browser</b>](https://www.google.com/chrome) - Open `index.html` to run the app.
-- [<b>Vercel / Netlify</b>](https://vercel.com) - Deploy your notes app online.
-
----
 
 ## Usage
 
@@ -85,16 +77,6 @@ Doto Notes is a dynamic, interactive note-taking web app designed to make organi
 
 10. **FAQ Section**
     - Toggle FAQ questions for quick guidance within the app.
-
----
-
-## Technologies Used
-
-- HTML5, CSS3
-- JavaScript (Vanilla JS)
-- LocalStorage API for persistence
-- SVG icons for interactive buttons
-- Responsive design for all devices
 
 ---
 
