@@ -1,32 +1,28 @@
 {
+  "version": 2,
   "name": "doto-notes",
-  "version": "1.0.0",
-  "description": "Doto Notes — Smart Colorful Notes. A local-first, interactive note-taking web app with color-coded notes, favorites, and search functionality.",
-  "main": "script.js",
-  "scripts": {
-    "start": "live-server --open=./index.html",
-    "build": "echo \"No build step required\"",
-    "test": "echo \"No tests configured\""
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/byllzz/doto-notes.git"
-  },
-  "keywords": [
-    "notes",
-    "local-storage",
-    "productivity",
-    "color-coded",
-    "todo",
-    "doto-notes"
+  "builds": [
+    {
+      "src": "index.html",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "style.css",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "script.js",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "assets/**",
+      "use": "@vercel/static"
+    }
   ],
-  "author": "Bilal Malik",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/byllzz/doto-notes/issues"
-  },
-  "homepage": "https://doto-notes.vercel.app",
-  "devDependencies": {
-    "live-server": "^1.2.2"
-  }
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "/index.html"
+    }
+  ]
 }
