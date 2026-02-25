@@ -3,8 +3,7 @@
 :root {
   --font-family: "Outfit", sans-serif;
   --base-font-size: 16px;
-
-  --sidebar-width: 120px;
+  --sidebar-width: 100px;
   --wrapper-gap: 30px;
   --wrapper-radius: 22px;
   --notes-gap: 40px;
@@ -16,7 +15,7 @@
   --bg: #ffffff;
   --text: #000000;
   --muted: #000000;
-  --muted-border: #0000005e;
+  --muted-border: #0000005d;
   --primary: #000000;
   --primary-contrast: #ffffff;
   --accent: #000000;
@@ -104,7 +103,6 @@ button {
 .sidebar {
   width: 100%;
   height: 100vh;
-  border-right: 2px solid var(--muted-border);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -116,6 +114,9 @@ button {
   font-family: sans-serif;
   background: transparent;
   overflow: visible;
+  box-shadow:5px 0px 15px rgba(0, 0, 0, 0.15);
+  border-top-right-radius: 59px;
+  border-bottom-right-radius: 59px;
 }
 
 .logo {
@@ -123,7 +124,7 @@ button {
   margin-bottom: 50px;
   font-size: 25px;
   font-family: var(--font-family);
-  line-height: .25;
+  line-height: .15;
   position: relative;
   left: 8px;
 }
@@ -137,9 +138,10 @@ button {
 }
 
 .logo span svg {
-  height: 34px;
+  height: 44px;
   margin: 0;
   animation: dice-roll 0.5s ease-in-out;
+  fill: none;
 }
 
 
@@ -147,29 +149,37 @@ button {
   display: flex;
   flex-direction: column;
   align-items: center;
+  position: relative;
+  top: 40px;
 }
 
 /* add note btn */
 .add-button {
-  width: 45px;
-  height: 45px;
+  width: 55px;
+  height: 55px;
   border-radius: 50%;
-  border: none;
-  background-color: var(--primary);
+  background: var(--primary);
   color: var(--primary-contrast);
-  font-size: 24px;
+  font-size: 40px;
+  font-weight: 400;
   cursor: pointer;
-  transition: transform 0.3s ease;
-  z-index: 2;
+  box-shadow:
+    0 0px 0 #111,
+    0 0px 12px rgba(0,0,0,0.15);
+  transition: all 0.08s ease;
+  position: relative;
 }
+.add-button:active {
+  transform: translateY(3px);
 
+  box-shadow:
+    0 1px 0 #111,
+    0 2px 6px rgba(0, 0, 0, 0.1);
+}
 .add-button.rotate {
   transform: rotate(45deg);
 }
 
-.add-button:active {
-  transform: scale(0.9);
-}
 
 /* color circles options */
 .color-options {
@@ -240,6 +250,7 @@ button {
   display: flex;
   position: relative !important;
   transition: var(--ease-1);
+  top: 10px;
 }
 
 /* this is for multicolors or custom color */
@@ -914,4 +925,3 @@ button:active,
   transform: translateY(0) scale(1);
 }
 
-/* media queries */

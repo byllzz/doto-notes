@@ -24,6 +24,7 @@
     border-bottom: none;
     padding: 10px 0 0;
     position: relative;
+    border-radius: 0;
   }
 
   .notes-grid {
@@ -60,6 +61,12 @@
     flex-direction: row;
     gap: 15px;
     align-items: center;
+    top: -20px;
+  }
+
+  .add-button {
+    height: 45px;
+    width: 45px;
   }
 
   .main-container-header h1 {
@@ -88,6 +95,9 @@
   .toggle-faqs-btn svg {
     height: 20px;
   }
+     .multi-color-wrapper {
+       top: 0;
+     }
 }
 
 @media screen and (min-width: 481px) and (max-width: 767px) {
@@ -151,8 +161,11 @@
     flex-direction: row;
     gap: 15px;
     align-items: center;
+    top: 0;
   }
-
+ .multi-color-wrapper {
+  top: 0;
+ }
   .main-container-header h1 {
     font-size: 30px;
   }
@@ -184,7 +197,12 @@
     gap: var(--wrapper-gap);
     height: 100vh;
   }
-
+  .logo {
+    font-size: 22px;
+  }
+  .logo span svg {
+    height: 30px;
+  }
   .sidebar {
     width: var(--sidebar-width);
     height: 100%;
